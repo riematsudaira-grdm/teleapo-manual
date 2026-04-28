@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRDM テレアポ トークスクリプト マニュアル</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #f5f4f1;
+    --card: #ffffff;
+    --border: #e2e0da;
+    --border-mid: #cccac2;
+    --text-primary: #1a1917;
+    --text-secondary: #5a5854;
+    --text-muted: #9a9690;
+    --accent: #2a4d8f;
+    --accent-light: #e8eef8;
+    --accent-mid: #c2d0eb;
+    --green: #2d6a4f;
+    --green-light: #e8f4ee;
+    --amber: #92400e;
+    --amber-light: #fef3c7;
+    --purple: #4c1d95;
+    --purple-light: #ede9fe;
+    --red: #991b1b;
+    --red-light: #fee2e2;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .page-header {
+    background: var(--accent);
+    color: white;
+    padding: 32px 40px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    right: 60px; bottom: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .header-inner { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
+  .header-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 3px 12px;
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+  }
+  .header-sub {
+    font-size: 13px;
+    opacity: 0.75;
+  }
+  .header-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: all .15s;
+    text-decoration: none;
+  }
+  .btn-white {
+    background: white;
+    color: var(--accent);
+  }
+  .btn-white:hover { background: #f0f4ff; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.5);
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.12); }
+
+  /* Main layout */
+  .main { max-width: 900px; margin: 0 auto; padding: 32px 24px 64px; }
+
+  /* Section */
+  .section { margin-bottom: 36px; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Flow row */
+  .flow-row {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+  .flow-step {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+  .step-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    min-width: 88px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: all .15s;
+    cursor: default;
+  }
+  .step-box:hover { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+  .step-num {
+    font-size: 10px;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    color: var(--accent);
+    margin-bottom: 3px;
+  }
+  .step-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .step-arrow {
+    width: 28px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .flow-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 6px 12px;
+    background: var(--amber-light);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid #d97706;
+    display: inline-block;
+  }
+
+  /* Script blocks */
+  .script-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: box-shadow .15s;
+  }
+  .script-block:hover { box-shadow: var(--shadow); }
+  .script-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    gap: 12px;
+  }
+  .script-header:hover { background: #fafaf9; }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+  }
+  .step-indicator {
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    color: white;
+    background: var(--accent);
+    border-radius: 4px;
+    padding: 2px 7px;
+    flex-shrink: 0;
+  }
+  .script-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .header-right { display: flex; align-items: center; gap: 8px; }
+  .tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+  .tag-you   { background: var(--accent-light); color: var(--accent); }
+  .tag-them  { background: var(--green-light); color: var(--green); }
+  .tag-tip   { background: var(--amber-light); color: var(--amber); }
+  .tag-goal  { background: var(--purple-light); color: var(--purple); }
+  .chevron {
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: transform .2s;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .chevron.open { transform: rotate(90deg); }
+
+  .script-body {
+    display: none;
+    padding: 0 18px 18px;
+    border-top: 1px solid var(--border);
+  }
+  .script-body.open { display: block; }
+  .script-body-inner { padding-top: 14px; }
+
+  /* Lines */
+  .script-line {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .speaker {
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 32px;
+    padding: 2px 0;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+  .speaker.you { color: var(--accent); }
+  .speaker.them { color: var(--green); }
+  .line-text {
+    font-size: 13.5px;
+    color: var(--text-primary);
+    line-height: 1.75;
+    flex: 1;
+  }
+  .hl {
+    background: linear-gradient(transparent 55%, #fff2a8 55%);
+    font-weight: 500;
+  }
+
+  /* Tip box */
+  .tip-box {
+    background: var(--amber-light);
+    border: 1px solid #fcd34d;
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 12.5px;
+    color: var(--amber);
+    line-height: 1.65;
+  }
+  .tip-box::before { content: "💡 "; }
+
+  /* Branch */
+  .branch {
+    margin: 8px 0 8px 16px;
+    padding: 10px 14px;
+    border-left: 2px solid var(--border-mid);
+    background: #fafaf8;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .branch-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.03em;
+  }
+
+  /* Checklist */
+  .checklist { list-style: none; }
+  .checklist li {
+    font-size: 13.5px;
+    color: var(--text-primary);
+    padding: 6px 0 6px 24px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.6;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-weight: 700;
+  }
+  .checklist.ng li::before {
+    content: "✕";
+    color: var(--red);
+  }
+
+  /* Objection grid */
+  .objection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .objection-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow .15s;
+  }
+  .objection-card:hover { box-shadow: var(--shadow); }
+  .obj-q {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--red);
+    background: var(--red-light);
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+  .obj-a {
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.7;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .stat-label { font-size: 11px; color: var(--text-secondary); }
+
+  /* Expand all toggle */
+  .toggle-all-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+  .toggle-all-btn {
+    font-family: inherit;
+    font-size: 12px;
+    color: var(--text-muted);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 14px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .toggle-all-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Footer */
+  .page-footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 11px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+  }
+
+  /* Print */
+  @media print {
+    .page-header { background: #2a4d8f !important; -webkit-print-color-adjust: exact; }
+    .header-actions, .toggle-all-row { display: none; }
+    .script-body { display: block !important; }
+    .chevron { display: none; }
+    body { background: white; }
+  }
+
+  @media (max-width: 640px) {
+    .page-header { padding: 24px 20px 20px; }
+    .main { padding: 20px 16px 48px; }
+    .objection-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .header-title { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-inner">
+    <div class="header-badge">GRDM 社内マニュアル / 経営戦略本部</div>
+    <div class="header-title">📞 テレアポ トークスクリプト マニュアル</div>
+    <div class="header-sub">AP取得（コールドコール）版 ／ 新卒・中途 共通</div>
+    <div class="header-actions">
+      <button class="btn btn-white" onclick="downloadPage()">⬇ HTMLファイルを保存</button>
+      <button class="btn btn-outline" onclick="window.print()">🖨 印刷する</button>
+      <button class="btn btn-outline" onclick="expandAll()">📂 全て展開</button>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- KPI stats -->
+  <div class="section">
+    <div class="section-label">業界基準値</div>
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num">1〜2%</div>
+        <div class="stat-label">個人への架電 APレート平均</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3〜5分</div>
+        <div class="stat-label">1コールの目安通話時間</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2〜3回</div>
+        <div class="stat-label">同リストへの最大架電回数</div>
+      </div>
+    </div>
+    <div class="flow-note">⚡ 目的は「売ること」ではなく「<strong>会うこと（AP獲得）</strong>」。商品の詳細は電話で話し込まない。</div>
+  </div>
+
+  <!-- Flow -->
+  <div class="section">
+    <div class="section-label">全体の流れ（AIDMA構造）</div>
+    <div class="flow-row">
+      <div class="flow-step">
+        <div class="step-box"><div class="step-num">STEP 1</div><div class="step-name">受付突破</div></div>
+      </div>
+      <div class="step-arrow">▶</div>
+      <div class="flow-step">
+        <div class="step-box"><div class="step-num">STEP 2</div><div class="step-name">挨拶・掴み</div></div>
+      </div>
+      <div class="step-arrow">▶</div>
+      <div class="flow-step">
+        <div class="step-box"><div class="step-num">STEP 3</div><div class="step-name">共感・問題提起</div></div>
+      </div>
+      <div class="step-arrow">▶</div>
+      <div class="flow-step">
+        <div class="step-box"><div class="step-num">STEP 4</div><div class="step-name">興味づけ</div></div>
+      </div>
+      <div class="step-arrow">▶</div>
+      <div class="flow-step">
+        <div class="step-box"><div class="step-num">STEP 5</div><div class="step-name">AP打診</div></div>
+      </div>
+      <div class="step-arrow">▶</div>
+      <div class="flow-step">
+        <div class="step-box"><div class="step-num">STEP 6</div><div class="step-name">ヒアリング</div></div>
+      </div>
+      <div class="step-arrow">▶</div>
+      <div class="flow-step">
+        <div class="step-box"><div class="step-num">STEP 7</div><div class="step-name">布石・終話</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <div class="section">
+    <div class="section-label">ステップ別スクリプト</div>
+    <div class="toggle-all-row">
+      <button class="toggle-all-btn" onclick="expandAll()">▼ 全て展開する</button>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="script-block">
+      <div class="script-header" onclick="toggle(this)">
+        <div class="header-left">
+          <span class="step-indicator">01</span>
+          <span class="script-title">受付突破</span>
+        </div>
+        <div class="header-right">
+          <span class="tag tag-tip">テクニック</span>
+          <span class="chevron">▶</span>
+        </div>
+      </div>
+      <div class="script-body">
+        <div class="script-body-inner">
+          <div class="tip-box">受付には「用件を聞く義務」がある。明確・簡潔に用件を伝えて担当者につないでもらう。詳細は絶対に話さない。</div>
+          <div class="script-line">
+            <span class="speaker you">自分</span>
+            <span class="line-text">「お世話になっております。グラデーションマネジメントの〇〇と申します。<span class="hl">財務・資産管理のご担当の方</span>をお願いできますでしょうか。」</span>
+          </div>
+          <div class="branch">
+            <div class="branch-label">▸「ご用件は？」と聞かれたら</div>
+            <div class="script-line" style="margin-bottom:0">
+              <span class="speaker you">自分</span>
+              <span class="line-text">「<span class="hl">節税・資産形成のご案内</span>でございます。ご担当の方はいらっしゃいますか。」</span>
+            </div>
+          </div>
+          <div class="branch">
+            <div class="branch-label">▸「営業はお断りしています」と言われたら</div>
+            <div class="script-line" style="margin-bottom:0">
+              <span class="speaker you">自分</span>
+              <span class="line-text">「かしこまりました。もし将来、資産形成やお税金の対策でお役に立てることがあれば、またご連絡させてください。ありがとうございました。」</span>
+            </div>
+          </div>
+          <div class="tip-box" style="margin-top:12px">教員・公務員向け：「〇〇高校の△△の先生をお願いします。<span class="hl">団体保険のご案内です</span>。」でも可。担当者名がわかる場合は必ず名指し。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="script-block">
+      <div class="script-header" onclick="toggle(this)">
+        <div class="header-left">
+          <span class="step-indicator">02</span>
+          <span class="script-title">挨拶・掴み（本人につながったら）</span>
+        </div>
+        <div class="header-right">
+          <span class="tag tag-you">自分トーク</span>
+          <span class="chevron">▶</span>
+        </div>
+      </div>
+      <div class="script-body">
+        <div class="script-body-inner">
+          <div class="script-line">
+            <span class="speaker you">自分</span>
+            <span class="line-text">「突然のお電話失礼いたします。グラデーションマネジメントの〇〇と申します。<span class="hl">手短に2〜3分</span>だけお時間いただけますか。」</span>
+          </div>
+          <div class="branch">
+            <div class="branch-label">▸「はい」→ そのまま③へ進む</div>
+          </div>
+          <div class="branch">
+            <div class="branch-label">▸「今忙しい」と言われたら</div>
+            <div class="script-line" style="margin-bottom:0">
+              <span class="speaker you">自分</span>
+              <span class="line-text">「そうですよね、失礼しました。では<span class="hl">〇日の〇時頃</span>、改めてお電話させていただいてもよろしいでしょうか。」</span>
+            </div>
+          </div>
+          <div class="tip-box">「お忙しいところ恐れ入ります」より「<span class="hl">手短に2〜3分</span>」の方が断られにくい。時間を具体的に示すと相手の警戒が下がる。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="script-block">
+      <div class="script-header" onclick="toggle(this)">
+        <div class="header-left">
+          <span class="step-indicator">03</span>
+          <span class="script-title">共感・問題提起（痛みを言語化する）</span>
+        </div>
+        <div class="header-right">
+          <span class="tag tag-them">会話引き出し</span>
+          <span class="chevron">▶</span>
+        </div>
+      </div>
+      <div class="script-body">
+        <div class="script-body-inner">
+          <div class="script-line">
+            <span class="speaker you">自分</span>
+            <span class="line-text">「最近、税金が昔に比べてじわじわ上がってきていまして、年収が上がっているのに手取りが増えないとおっしゃる方が本当に多いんですね。〇〇様はそういったご実感、ありませんか？」</span>
+          </div>
+          <div class="branch">
+            <div class="branch-label">▸「ある」→ 「そうですよね」と共感して④へ</div>
+          </div>
+          <div class="branch">
+            <div class="branch-label">▸「ない/わからない」と言われたら</div>
+            <div class="script-line" style="margin-bottom:0">
+              <span class="speaker you">自分</span>
+              <span class="line-text">「そうなんですね。実は源泉徴収票を見ていただくと、年収の<span class="hl">15〜20%が税金で引かれている</span>んですね。年収600万の方だと年間90〜120万ほど。意外と多いと思いませんか？」</span>
+            </div>
+          </div>
+          <div class="tip-box">ここは「YES」を引き出すことが目的。相手が「確かに」と思えるような、誰でも感じている課題感を言語化する。NISAをやっているかも確認ポイント。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="script-block">
+      <div class="script-header" onclick="toggle(this)">
+        <div class="header-left">
+          <span class="step-indicator">04</span>
+          <span class="script-title">興味づけ（ベネフィットを一言で）</span>
+        </div>
+        <div class="header-right">
+          <span class="tag tag-you">自分トーク</span>
+          <span class="chevron">▶</span>
+        </div>
+      </div>
+      <div class="script-body">
+        <div class="script-body-inner">
+          <div class="script-line">
+            <span class="speaker you">自分</span>
+            <span class="line-text">「実は弊社、都内の一等地の分譲マンションを活用することで、<span class="hl">毎月の税負担をほぼペイしながら、将来の資産と保険を同時に作れる</span>プランをご案内していまして。周りで始めている方も多いんですが、そういうお話、聞かれたことはありますか？」</span>
+          </div>
+          <div class="branch">
+            <div class="branch-label">▸「ない / 興味ない」→ アウト返しへ（後述）</div>
+          </div>
+          <div class="branch">
+            <div class="branch-label">▸「少し聞いたことある / 興味ある」→ ⑤へ</div>
+          </div>
+          <div class="tip-box">電話でメリットを全部話してはいけない。「一度見てほしい」という流れに持ち込むのが目的。3つのベネフィット（<span class="hl">節税・保険・資産</span>）を一言でまとめる。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="script-block">
+      <div class="script-header" onclick="toggle(this)">
+        <div class="header-left">
+          <span class="step-indicator">05</span>
+          <span class="script-title">アポイント打診（2択クロージング）</span>
+        </div>
+        <div class="header-right">
+          <span class="tag tag-goal">AP獲得</span>
+          <span class="chevron">▶</span>
+        </div>
+      </div>
+      <div class="script-body">
+        <div class="script-body-inner">
+          <div class="script-line">
+            <span class="speaker you">自分</span>
+            <span class="line-text">「一度、周りの方がどんな内容でやっているのか見ていただくだけでも、と思いまして。<span class="hl">今週でしたら、火曜か水曜の夕方</span>はいかがでしょうか。」</span>
+          </div>
+          <div class="branch">
+            <div class="branch-label">▸ 日程が合わない場合</div>
+            <div class="script-line" style="margin-bottom:0">
+              <span class="speaker you">自分</span>
+              <span class="line-text">「そうですか、では来週はいかがでしょうか。<span class="hl">お仕事終わりの18時か19時</span>、どちらがご都合よいですか？」</span>
+            </div>
+          </div>
+          <div class="branch">
+            <div class="branch-label">▸ 地方の方の場合</div>
+            <div class="script-line" style="margin-bottom:0">
+              <span class="speaker you">自分</span>
+              <span class="line-text">「本当はすぐにお伺いしたいのですが、まずは資料をお送りして、お電話越しでご案内させていただきたいのですが、<span class="hl">郵送先はご自宅とご勤務先、どちらがよいですか？</span>」</span>
+            </div>
+          </div>
+          <div class="tip-box">「会いませんか？」ではなく「<span class="hl">火曜か水曜、どちらが都合いいですか？</span>」という2択で提示。選ばせると承諾率が上がる。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="script-block">
+      <div class="script-header" onclick="toggle(this)">
+        <div class="header-left">
+          <span class="step-indicator">06</span>
+          <span class="script-title">ヒアリング（AP確定後に必ず取る）</span>
+        </div>
+        <div class="header-right">
+          <span class="tag tag-them">情報収集</span>
+          <span class="chevron">▶</span>
+        </div>
+      </div>
+      <div class="script-body">
+        <div class="script-body-inner">
+          <div class="script-line">
+            <span class="speaker you">自分</span>
+            <span class="line-text">「ありがとうございます。<span class="hl">当日的外れな資料を持っていかないよう</span>、少しだけ確認させてください。」</span>
+          </div>
+          <ul class="checklist">
+            <li>「今のご年齢はおいくつですか？」</li>
+            <li>「ご家族構成を教えていただけますか？（奥様は専業か共働きか、お子様は何歳か）」</li>
+            <li>「お住まいは持ち家ですか、賃貸ですか？（住宅ローンの残債はざっくりいくらですか？）」</li>
+            <li>「税金がいくら戻るか試算したいので、ざっくり年収を教えていただけますか？（500・600・700・800どのあたりですか？）」</li>
+            <li>「今、NISAや個人年金など、何か資産形成はされていますか？」</li>
+          </ul>
+          <div class="tip-box">年収400万以下の場合：「大変申し訳ないのですが、融資条件上ご案内が難しい状況です。またご年収が上がりましたら、ぜひご連絡させてください。」→ 丁寧に終話。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 7 -->
+    <div class="script-block">
+      <div class="script-header" onclick="toggle(this)">
+        <div class="header-left">
+          <span class="step-indicator">07</span>
+          <span class="script-title">布石・クロージング（当日への橋渡し）</span>
+        </div>
+        <div class="header-right">
+          <span class="tag tag-goal">クロージング</span>
+          <span class="chevron">▶</span>
+        </div>
+      </div>
+      <div class="script-body">
+        <div class="script-body-inner">
+          <div class="script-line">
+            <span class="speaker you">自分</span>
+            <span class="line-text">「当日はまず<span class="hl">メリットをメインにご案内</span>して、内容が良ければ次のステップ、合わなければその旨おっしゃっていただければ大丈夫です。まずはフラットに見てみてください。」</span>
+          </div>
+          <div class="script-line">
+            <span class="speaker you">自分</span>
+            <span class="line-text">「あと、不動産と聞いて、何かイメージや気になることはありますか？」</span>
+          </div>
+          <div class="branch">
+            <div class="branch-label">▸「特にない」→</div>
+            <div class="script-line" style="margin-bottom:4px">
+              <span class="speaker you">自分</span>
+              <span class="line-text">「かしこまりました。フラットなイメージということですね。当日きちんとご説明します。」</span>
+            </div>
+          </div>
+          <div class="branch">
+            <div class="branch-label">▸「高そう・リスクが怖い」など →</div>
+            <div class="script-line" style="margin-bottom:4px">
+              <span class="speaker you">自分</span>
+              <span class="line-text">「よくいただくご質問です。当日しっかりお答えしますね。ほかにはありますか？」（→「ない」）「承知しました。当日きちんとお伝えします。」</span>
+            </div>
+          </div>
+          <div class="script-line">
+            <span class="speaker you">自分</span>
+            <span class="line-text">「では<span class="hl">前日か当日お昼に確認のお電話</span>させていただきますね。お忙しい中ありがとうございました。当日よろしくお願いします！」</span>
+          </div>
+          <div class="tip-box">当日キャンセル防止のリマインド電話は必須。「前日のお昼5分」が最もキャンセル率を下げる。約束を守ることが信頼の第一歩。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Objections -->
+  <div class="section">
+    <div class="section-label">よくある断り文句と切り返し</div>
+    <div class="objection-grid">
+
+      <div class="objection-card">
+        <div class="obj-q">「不動産は興味ない」</div>
+        <div class="obj-a">「そうですよね。目的は不動産ではなく、高い税金を節税しながら保険と資産を同時に作ること。ハワイに行くのに飛行機が好きだから乗るんじゃなく、一番効率がいいから乗るのと同じで、<strong>手段として不動産を使う</strong>んですね。一度中身だけ見てもらえませんか？」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「今は考えていない」</div>
+        <div class="obj-a">「もちろんです。正直、資産形成に最初からやる気満々の方なんていないんです。でも、やる気になった頃には手遅れになりがちで。今の生活に支障が出ない形で対策できるなら、<strong>話を聞いてみる価値はありますよね？</strong>」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「忙しくて時間がない」</div>
+        <div class="obj-a">「おっしゃる通りです。だからこそ、一度見ていただくだけで仕組みがわかるようにお話しします。1時間だけいただければ十分です。<strong>〇〇様のお仕事終わりに伺えますので</strong>、最寄り駅近くのカフェでいかがでしょうか。」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「怪しい・詐欺じゃないの？」</div>
+        <div class="obj-a">「そうおっしゃる方、正直多いんですよ。だから一度フラットに話を聞いてみてください。良くなければその場でお断りいただければ結構ですし、<strong>合わなければ無理にとはいいません</strong>。まず内容を見ていただいた上でご判断ください。」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「もう対策している」</div>
+        <div class="obj-a">「さすがです！どういった形でされていますか？（聞く）そうなんですね。実は弊社のプランと組み合わせると、さらに節税効果が高まるケースも多いんです。<strong>一度比べてみるだけでも損はない</strong>と思いますが、いかがでしょうか。」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「妻（夫）に相談してから」</div>
+        <div class="obj-a">「もちろんです。ただ、相談するにも内容がわからないと話しにくいと思います。<strong>まず〇〇様に一度内容を見ていただいてから</strong>、奥様にご説明されるのが一番スムーズかと思いますが、いかがでしょうか。」</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NG actions -->
+  <div class="section">
+    <div class="section-label">NG行動（やってはいけないこと）</div>
+    <div class="script-block">
+      <ul class="checklist ng" style="padding: 8px 16px 4px;">
+        <li>電話で商品の詳細・金額・利回りを全部話す（APが取れなくなる）</li>
+        <li>「絶対儲かります」「損しません」などの断言表現（宅建業法違反になりうる）</li>
+        <li>1回の断りで「わかりました」とすぐ引く（最低2回は切り返す）</li>
+        <li>3回以上の強引な切り返し（相手を不快にさせてブランドイメージ毀損）</li>
+        <li>夜9時以降・早朝の架電（宅地建物取引業法により禁止）</li>
+        <li>当日リマインド電話を忘れる（キャンセル率が跳ね上がる）</li>
+        <li>会社名・用件を名乗らずに話を進める（宅建業法で禁止）</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Mind set -->
+  <div class="section">
+    <div class="section-label">マインドセット・心構え</div>
+    <div class="script-block">
+      <ul class="checklist" style="padding: 8px 16px 4px;">
+        <li>個人への架電APレートの業界平均は1〜2%。100本で1〜2件が普通。</li>
+        <li>断られることはデフォルト。気にしない。数を打つことが最重要。</li>
+        <li>1コールあたりの通話時間は3〜5分を目安に。長く話しすぎない。</li>
+        <li>スクリプトは「読む」ためではなく「頭に入れて自然に話す」ためのもの。</li>
+        <li>同じリストには日を変えて2〜3回コール。タイミングで変わることがある。</li>
+        <li>声のトーンを上げて明るく話す。電話は声だけが唯一の印象材料。</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="page-footer">
+  GRDM 経営戦略本部 ／ 社内限定資料 ／ 無断転載禁止
+</div>
+
+<script>
+function toggle(header) {
+  const body = header.parentElement.querySelector('.script-body');
+  const chevron = header.querySelector('.chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+
+function expandAll() {
+  const allBodies = document.querySelectorAll('.script-body');
+  const allChevrons = document.querySelectorAll('.chevron');
+  const btn = document.querySelector('.toggle-all-btn');
+  const anyOpen = Array.from(allBodies).some(b => b.classList.contains('open'));
+  allBodies.forEach(b => b.classList.toggle('open', !anyOpen));
+  allChevrons.forEach(c => c.classList.toggle('open', !anyOpen));
+  btn.textContent = anyOpen ? '▼ 全て展開する' : '▲ 全て閉じる';
+}
+
+function downloadPage() {
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'GRDM_テレアポスクリプトマニュアル.html';
+  a.click();
+}
+</script>
+</body>
+</html>
