@@ -28,6 +28,12 @@
     --red-light: #fee2e2;
     --teal: #0f5f5f;
     --teal-light: #e0f4f4;
+    --orange: #7c2d12;
+    --orange-light: #fff7ed;
+    --orange-border: #fed7aa;
+    --pink: #831843;
+    --pink-light: #fdf2f8;
+    --pink-border: #fbcfe8;
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
     --shadow: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
     --radius: 10px;
@@ -58,6 +64,9 @@
   .tab-btn:hover { color: var(--text-primary); }
   .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
   .tab-btn.active-teal { color: var(--teal); border-bottom-color: var(--teal); }
+  .tab-btn.active-orange { color: var(--orange); border-bottom-color: #ea580c; }
+  .tab-btn.active-pink { color: var(--pink); border-bottom-color: #db2777; }
+  .tab-btn.active-purple { color: var(--purple); border-bottom-color: var(--purple); }
 
   .tab-content { display: none; }
   .tab-content.active { display: block; }
@@ -93,6 +102,59 @@
   .tag-tip { background: var(--amber-light); color: var(--amber); }
   .tag-goal { background: var(--purple-light); color: var(--purple); }
   .tag-teal { background: var(--teal-light); color: var(--teal); }
+  .tag-orange { background: var(--orange-light); color: var(--orange); border: 1px solid var(--orange-border); }
+  .tag-pink { background: var(--pink-light); color: var(--pink); border: 1px solid var(--pink-border); }
+
+  /* Temperature bar */
+  .temp-bar-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 12px; box-shadow: var(--shadow-sm); }
+  .temp-bar-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; }
+  .temp-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .temp-label { font-size: 12px; font-weight: 500; min-width: 72px; color: var(--text-secondary); }
+  .temp-bar { flex: 1; height: 20px; border-radius: 10px; position: relative; overflow: hidden; background: var(--bg); border: 1px solid var(--border); }
+  .temp-fill { height: 100%; border-radius: 10px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; font-size: 11px; font-weight: 700; color: white; transition: width .5s; }
+  .temp-fill.t100 { width: 100%; background: linear-gradient(90deg, #dc2626, #ef4444); }
+  .temp-fill.t75  { width: 75%;  background: linear-gradient(90deg, #d97706, #f59e0b); }
+  .temp-fill.t55  { width: 55%;  background: linear-gradient(90deg, #d97706, #fbbf24); }
+  .temp-fill.t30  { width: 30%;  background: linear-gradient(90deg, #16a34a, #4ade80); }
+  .temp-fill.t10  { width: 10%;  background: linear-gradient(90deg, #6b7280, #9ca3af); }
+
+  /* Flow card for tsuikyaku */
+  .flow-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+  .flow-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 12px; text-align: center; box-shadow: var(--shadow-sm); }
+  .flow-card-icon { font-size: 24px; margin-bottom: 8px; }
+  .flow-card-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .flow-card-sub { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+
+  /* NG/OK compare */
+  .ng-ok-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .ng-box { background: var(--red-light); border: 1px solid #fca5a5; border-radius: var(--radius-sm); padding: 12px 14px; }
+  .ok-box { background: var(--green-light); border: 1px solid #86efac; border-radius: var(--radius-sm); padding: 12px 14px; }
+  .ng-box .box-label { font-size: 11px; font-weight: 700; color: var(--red); margin-bottom: 6px; }
+  .ok-box .box-label { font-size: 11px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+  .box-text { font-size: 13px; color: var(--text-primary); line-height: 1.65; }
+  .box-result { font-size: 12px; margin-top: 6px; font-weight: 500; }
+  .box-result.red { color: var(--red); }
+  .box-result.green { color: var(--green); }
+
+  /* Tatoe cards */
+  .tatoe-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tatoe-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow-sm); transition: box-shadow .15s; }
+  .tatoe-card:hover { box-shadow: var(--shadow); }
+  .tatoe-scene { font-size: 11px; font-weight: 700; color: white; background: var(--accent); border-radius: 4px; padding: 2px 8px; display: inline-block; margin-bottom: 8px; }
+  .tatoe-scene.orange { background: #ea580c; }
+  .tatoe-scene.teal { background: var(--teal); }
+  .tatoe-scene.purple { background: var(--purple); }
+  .tatoe-scene.green { background: var(--green); }
+  .tatoe-scene.pink { background: #db2777; }
+  .tatoe-body { font-size: 13.5px; color: var(--text-primary); line-height: 1.75; margin-bottom: 8px; font-style: italic; }
+  .tatoe-point { font-size: 12px; color: var(--text-secondary); background: var(--bg); border-radius: var(--radius-sm); padding: 6px 10px; }
+
+  /* God advice numbered */
+  .god-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .god-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; box-shadow: var(--shadow-sm); display: flex; gap: 10px; align-items: flex-start; }
+  .god-num { font-size: 14px; font-weight: 700; font-family: 'DM Mono', monospace; color: white; background: var(--accent); border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .god-text { font-size: 13px; color: var(--text-primary); line-height: 1.65; }
+  .god-example { font-size: 12px; color: var(--text-muted); margin-top: 4px; font-style: italic; }
   .chevron { font-size: 12px; color: var(--text-muted); transition: transform .2s; display: inline-block; flex-shrink: 0; }
   .chevron.open { transform: rotate(90deg); }
   .script-body { display: none; padding: 0 18px 18px; border-top: 1px solid var(--border); }
@@ -190,7 +252,10 @@
   <div class="tab-nav-inner">
     <button class="tab-btn active" onclick="switchTab('setuzei', this)">💰 節税パターン</button>
     <button class="tab-btn" onclick="switchTab('hoken', this)">🛡 保険・年金パターン</button>
-    <button class="tab-btn" onclick="switchTab('guide', this)">📊 パターン使い分けガイド</button>
+    <button class="tab-btn" onclick="switchTab('guide', this)">📊 使い分けガイド</button>
+    <button class="tab-btn" onclick="switchTab('tsuikyaku', this)">🔥 追客編</button>
+    <button class="tab-btn" onclick="switchTab('makikaeashi', this)">⚡ 巻き返し集</button>
+    <button class="tab-btn" onclick="switchTab('tatoe', this)">💬 たとえ話例</button>
   </div>
 </div>
 
@@ -778,6 +843,387 @@
 </div>
 </div>
 
+<!-- ==================== TAB 4: 追客編 ==================== -->
+<div id="tab-tsuikyaku" class="tab-content">
+<div class="main">
+
+  <div class="pattern-badge" style="background:#fff7ed;color:#7c2d12;border:1px solid #fed7aa;">🔥 追客編 ／ 追客を制する者は、営業を制する</div>
+
+  <div class="section">
+    <div class="section-label">なぜ追客が必要か ── 温度は時間とともに下がる</div>
+    <div class="temp-bar-wrap">
+      <div class="temp-bar-title">📉 初電からの「お客様の興味・温度」の変化</div>
+      <div class="temp-row"><span class="temp-label">初電直後</span><div class="temp-bar"><div class="temp-fill t100">100%</div></div></div>
+      <div class="temp-row"><span class="temp-label">翌日</span><div class="temp-bar"><div class="temp-fill t75">75%</div></div></div>
+      <div class="temp-row"><span class="temp-label">3日後</span><div class="temp-bar"><div class="temp-fill t55">55%</div></div></div>
+      <div class="temp-row"><span class="temp-label">1週間後</span><div class="temp-bar"><div class="temp-fill t30">30%</div></div></div>
+      <div class="temp-row"><span class="temp-label">放置</span><div class="temp-bar"><div class="temp-fill t10">10%</div></div></div>
+      <div class="tip-box" style="margin-top:12px">放置 ＝ 機会損失。追客で温度を保ち続けることが勝負！「まっいいか」の先送りが失敗の最大の原因。</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">AP取得までの道のり</div>
+    <div class="flow-cards">
+      <div class="flow-card">
+        <div class="flow-card-icon">📞</div>
+        <div class="flow-card-title">初電</div>
+        <div class="flow-card-sub">一発狩りを狙う<br>→ 着地：追客見込み</div>
+      </div>
+      <div class="flow-card">
+        <div class="flow-card-icon">💡</div>
+        <div class="flow-card-title">終わりに仕込む</div>
+        <div class="flow-card-sub">人的・物的接点<br>次回日時の約束</div>
+      </div>
+      <div class="flow-card">
+        <div class="flow-card-icon">🔥</div>
+        <div class="flow-card-title">追客①②③…</div>
+        <div class="flow-card-sub">前回の終わりから入る<br>温度を少しずつ上げる</div>
+      </div>
+      <div class="flow-card">
+        <div class="flow-card-icon">✅</div>
+        <div class="flow-card-title">AP取得！</div>
+        <div class="flow-card-sub">日時を確定させる<br>確約にランクアップ</div>
+      </div>
+    </div>
+    <div class="info-box">一発狩りとは……初電だけでアポイントを切ること。初電の温度が最高潮のタイミングでAPを切れるのが理想の形！ただし時間切れや後から断られるケースがほとんど。<strong>一発狩りの勢いでトークしながら、大半は「追客見込み」として着地する。それが現実！</strong></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">初電の「終わり方」が追客を制する ── 必ず3つを仕込め</div>
+    <div class="script-block">
+      <div class="script-header" onclick="toggle(this)">
+        <div class="header-left"><span class="step-indicator" style="background:#ea580c">①</span><span class="script-title">人的接点を残す ── 「あの人から電話が来た」と覚えてもらう</span></div>
+        <div class="header-right"><span class="tag tag-orange">人的</span><span class="chevron">▶</span></div>
+      </div>
+      <div class="script-body">
+        <div class="script-body-inner">
+          <div style="font-size:13px;color:var(--text-secondary);margin-bottom:10px;">名前・趣味・出身地・共通の話題などを会話の中で引き出す</div>
+          <div class="script-line">
+            <span class="speaker you">例文</span>
+            <span class="line-text">「実は私も○○が好きで！また話しましょう！」</span>
+          </div>
+          <div class="script-line">
+            <span class="speaker you">例文</span>
+            <span class="line-text">「○○ご出身なんですね！私も縁があって。次回ぜひまたお話しさせてください！」</span>
+          </div>
+          <div class="tip-box">相手のリアクション（ボケ・質問・言葉）は必ず拾う。「50歳くらいの人が20歳ですってボケた時」も流さずに拾って人間関係を作る。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="script-block">
+      <div class="script-header" onclick="toggle(this)">
+        <div class="header-left"><span class="step-indicator" style="background:#d97706">②</span><span class="script-title">物的接点を残す ── 「気になる情報」を仕込んで終わる</span></div>
+        <div class="header-right"><span class="tag tag-tip">情報</span><span class="chevron">▶</span></div>
+      </div>
+      <div class="script-body">
+        <div class="script-body-inner">
+          <div style="font-size:13px;color:var(--text-secondary);margin-bottom:10px;">税金・年金・保険・制度改正など「気になる情報」を仕込んで終わる</div>
+          <div class="script-line">
+            <span class="speaker you">例文</span>
+            <span class="line-text">「実は来年から退職金の課税が変わるんです！詳しくは次回お話しさせてください！」</span>
+          </div>
+          <div class="script-line">
+            <span class="speaker you">例文</span>
+            <span class="line-text">「先週、○○様と同じ状況のお客様で、税金が年間○○万円戻ったケースがあって。○○様にも関係するかもと思いまして、次回お話しできますか？」</span>
+          </div>
+          <div class="tip-box">追客とはきっかけ。新しい知識・情報・ケーススタディを得た時、それが次の話を振るきっかけになる。きっかけがある度に追客すべし！</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="script-block">
+      <div class="script-header" onclick="toggle(this)">
+        <div class="header-left"><span class="step-indicator" style="background:#16a34a">③</span><span class="script-title">次回の約束を取る（最強） ── 約束があれば次回は「既知の人」</span></div>
+        <div class="header-right"><span class="tag tag-goal">最強</span><span class="chevron">▶</span></div>
+      </div>
+      <div class="script-body">
+        <div class="script-body-inner">
+          <div class="script-line">
+            <span class="speaker you">例文</span>
+            <span class="line-text">「お忙しくなければ来週また10分だけ聞いてください！<span class="hl">火曜と水曜どちらがご都合よいですか？</span>」</span>
+          </div>
+          <div class="script-line">
+            <span class="speaker you">例文</span>
+            <span class="line-text">「約束ですよ！では〇日〇時にお電話させていただきますね。<span class="hl">男に二言はないですよ！</span>」</span>
+          </div>
+          <div class="tip-box">小さな約束を沢山作り、確約にランクアップさせる。「約束ですよ！」「男（女）に二言はないですよ！」など口頭で確約させる。取った約束はベースに話を進める。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">追客の「入り方」── 前回の電話の終わりを武器にせよ</div>
+    <div class="ng-ok-grid">
+      <div class="ng-box">
+        <div class="box-label">✕ NGな入り方</div>
+        <div class="box-text">「こんにちは、○○です。先日お電話しました者で…」</div>
+        <div class="box-result red">→ 相手は誰だか思い出せない<br>→ 最初から説明しなおし<br>→ 温度は上がらないまま終わる</div>
+      </div>
+      <div class="ok-box">
+        <div class="box-label">✓ OKな入り方</div>
+        <div class="box-text">「前に○○のお話をした○○です！前回の続きだったんですが…♪」</div>
+        <div class="box-result green">→ 相手が「あの子か！」と思い出す<br>→ 前回の文脈から自然に入れる<br>→ 温度が瞬時に蘇る！</div>
+      </div>
+    </div>
+    <div class="script-block">
+      <div style="padding:16px 18px;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--text-primary);">📋 追客の実践スクリプト例</div>
+        <div class="script-line">
+          <span class="speaker you">追客①</span>
+          <span class="line-text">「前回は知識不足のため中途半端なお電話で申し訳ありませんでした。実は○○だったんです！それだったらちょうど○○さんと同じだと思ってお電話しました。○○さんも○○になったらどうですか？」</span>
+        </div>
+        <div class="script-line">
+          <span class="speaker you">追客②</span>
+          <span class="line-text">「前に落ち着いたら話を聞いてくださるとおっしゃっていただいたので今日はお話聞いてください♪」</span>
+        </div>
+        <div class="script-line">
+          <span class="speaker you">宿題活用</span>
+          <span class="line-text">「新人で知識不足のため申し訳ありません、それが解消できるかどうか、すぐ調べますので宿題にさせてください！（※必ず次の電話の約束は取る）」</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">テレアポの神様からのアドバイス14箇条</div>
+    <div class="god-grid">
+      <div class="god-card"><div class="god-num">1</div><div><div class="god-text">相手のリアクション（ボケ・質問・言葉）は必ず拾う</div><div class="god-example">例）50歳くらいの人が「20歳です」とボケた時→流さない！</div></div></div>
+      <div class="god-card"><div class="god-num">2</div><div><div class="god-text">相手が思っていそうな事は事前に振って本音を探る</div><div class="god-example">例）「早く切りたいなと思ってないですか？」</div></div></div>
+      <div class="god-card"><div class="god-num">3</div><div><div class="god-text">相手との共通項を見つけ、突破口を作る</div><div class="god-example">例）趣味・異性・子供・今社会に対して思っていること</div></div></div>
+      <div class="god-card"><div class="god-num">4</div><div><div class="god-text">小さな約束を沢山作る</div><div class="god-example">例）電話の約束・30分は時間を作ってもらう約束</div></div></div>
+      <div class="god-card"><div class="god-num">5</div><div><div class="god-text">約束を確約にランクアップさせる</div><div class="god-example">例）「約束ですよ！」「男に二言はないですよ！」</div></div></div>
+      <div class="god-card"><div class="god-num">6</div><div><div class="god-text">取った約束をベースに話を進める</div><div class="god-example">例）「前回のお約束通り…」「お約束を守っていただけると言ったじゃないですか〜」</div></div></div>
+      <div class="god-card"><div class="god-num">7</div><div><div class="god-text">明確な会話のキャッチボールをする</div><div class="god-example">例）「だから結論何が言いたいの？」という質問にはズレた回答をしない</div></div></div>
+      <div class="god-card"><div class="god-num">8</div><div><div class="god-text">追客はきっかけ。新情報・ケーススタディが得られたらすぐ電話</div><div class="god-example">例）「○○のお客様で○○なケースがありまして…」</div></div></div>
+      <div class="god-card"><div class="god-num">9</div><div><div class="god-text">分からない事は宿題にして追客のきっかけにする</div><div class="god-example">例）「すぐ調べますので宿題にさせてください！」（次の電話の約束は必ず取る）</div></div></div>
+      <div class="god-card"><div class="god-num">10</div><div><div class="god-text">同じ言葉でもお互いの認識が違うことを理解する</div><div class="god-example">例）「投資」→ 相手は「ギャンブル」、自分は「賢い方法」</div></div></div>
+      <div class="god-card"><div class="god-num">11</div><div><div class="god-text">1件1件にベストを尽くす</div><div class="god-example">「あの人がこうだったからこの人もこうだろう」で取りこぼすのが最悪</div></div></div>
+      <div class="god-card"><div class="god-num">12</div><div><div class="god-text">1人でうまくいかなかったからと言って使えないと判断しない</div><div class="god-example">10打数1安打でもかなりの高確率のノウハウ</div></div></div>
+      <div class="god-card"><div class="god-num">13</div><div><div class="god-text">「何を言ったか」ではなく「相手にどう伝わったか」で判断する</div><div class="god-example">例）YESが「あ〜はい」ではなく「そりゃあ、約束ですから！」になるように</div></div></div>
+      <div class="god-card"><div class="god-num">14</div><div><div class="god-text">先送り撲滅！</div><div class="god-example">「まっいいか」の1日延ばし・1週間延ばしが失敗の最大の原因</div></div></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ==================== TAB 5: 巻き返し（切り返し）集 ==================== -->
+<div id="tab-makikaeashi" class="tab-content">
+<div class="main">
+
+  <div class="pattern-badge" style="background:#fdf2f8;color:#831843;border:1px solid #fbcfe8;">⚡ 巻き返し（切り返し）集 ／ 断りは終わりじゃない、始まりだ</div>
+  <div class="info-box">断りに対しては<strong>最低2回切り返す。3回以上は逆効果</strong>。1回目は共感、2回目は別角度から提案するのが鉄則。</div>
+
+  <div class="section">
+    <div class="section-label">電話中の断り・切り返し</div>
+    <div class="objection-grid">
+
+      <div class="objection-card">
+        <div class="obj-q">「不動産は興味ない」</div>
+        <div class="obj-a">「そうですよね。目的は不動産ではなく、節税・保険・資産を同時に作ること。ハワイに行くのに飛行機が好きだから乗るんじゃなく、一番効率がいいから乗るのと同じで、<strong>手段として不動産を使う</strong>んですね。一度中身だけ見てもらえませんか？」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「今は考えていない」</div>
+        <div class="obj-a">「もちろんです。正直、資産形成に最初からやる気満々の方なんていないんです。でも、やる気になった頃には手遅れになりがちで。今の生活に支障が出ない形で対策できるなら、<strong>話を聞いてみる価値はありますよね？</strong>」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「忙しくて時間がない」</div>
+        <div class="obj-a">「おっしゃる通りです。だからこそ、一度見ていただくだけで仕組みがわかるようにお話しします。<strong>1時間だけいただければ十分です</strong>。〇〇様のお仕事終わりに伺えますので、最寄り駅近くのカフェでいかがでしょうか。」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「怪しい・詐欺じゃないの？」</div>
+        <div class="obj-a">「そうおっしゃる方、正直多いんですよ。だからこそ一度フラットに話を聞いてみてください。<strong>良くなければその場でお断りいただければ結構</strong>ですし、合わなければ無理にとはいいません。まず内容を見ていただいた上でご判断ください。」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「もう対策している」</div>
+        <div class="obj-a">「さすがです！どういった形でされていますか？（聞く）そうなんですね。実は弊社のプランと組み合わせると、さらに節税効果が高まるケースも多いんです。<strong>一度比べてみるだけでも損はない</strong>と思いますが、いかがでしょうか。」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「妻（夫）に相談してから」</div>
+        <div class="obj-a">「もちろんです。ただ、相談するにも内容がわからないと話しにくいと思います。<strong>まず〇〇様に一度内容を見ていただいてから</strong>、奥様にご説明されるのが一番スムーズかと思いますが、いかがでしょうか。」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「投資はギャンブルだから嫌だ」</div>
+        <div class="obj-a">「おっしゃる通り、ギャンブルのような投資は絶対NGですよね。弊社がご案内するのは、<strong>毎月の家賃収入がある実物資産</strong>なので、株やFXのように価格が急落するものとは全く違うんです。ギャンブルじゃない理由だけでも聞いてみませんか？」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「お金がない・ローンが組めない」</div>
+        <div class="obj-a">「そうなんですね。ちなみに住宅ローンはお持ちですか？（確認）実は弊社の場合、<strong>毎月の持ち出しがほぼゼロ</strong>になる形でご案内しているんです。自己資金ゼロから始められているお客様も多くいらっしゃいますよ。一度計算だけしてみませんか？」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「リスクが怖い」</div>
+        <div class="obj-a">「そのご不安はもっともです。でも実は<strong>何もしないことの方がリスク</strong>なんですよね。老後2,000万問題・年金の目減り・インフレ…これ全部「対策しないリスク」なんです。当日そのリスクも全部説明しますので、一度だけ聞いてみてください。」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「前に別の会社の話を聞いたことがある」</div>
+        <div class="obj-a">「そうなんですね、どんな内容でしたか？（聞く）なるほど、それは〇〇系ですね。弊社の内容は構造が少し違っていまして、<strong>比べていただくと違いが一目瞭然</strong>なんです。比較するだけでも損はないと思いますが、どうでしょうか？」</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">AP確定後・当日キャンセルの巻き返し</div>
+    <div class="objection-grid">
+
+      <div class="objection-card">
+        <div class="obj-q">「やっぱりキャンセルします」（当日）</div>
+        <div class="obj-a">「そうですか、急なご事情でしょうか？（聞く）承知しました。ただせっかくお時間作っていただいていたので、<strong>30分だけでもいかがでしょうか</strong>。内容だけ見ていただいて、合わなければその場でおっしゃっていただいて大丈夫ですので。」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「考えたけどやっぱりいいです」（追客時）</div>
+        <div class="obj-a">「そうなんですね。差し支えなければ、どういったところでご不安を感じられましたか？（聞く）なるほど。実はその点が一番多くいただくご質問でして、<strong>当日しっかりお答えできます</strong>。一度だけ話を聞いてもらえませんか？」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「忙しくなったので来月以降にして」</div>
+        <div class="obj-a">「承知しました！では来月、○日か○日でいかがでしょうか。（2択で提示）実は来月から物件の状況が変わる可能性がありまして、<strong>早めにご覧いただいた方がいい物件をご提案できる</strong>と思いますので、ぜひよろしくお願いします！」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「電話してこないでください」</div>
+        <div class="obj-a">「大変失礼いたしました。実は今後のご連絡方法についてお伺いしたかったのですが、<strong>メールやLINEでご案内する形</strong>ならご迷惑になりませんでしょうか？もしよろしければご連絡先を…」（それも無理なら「貴重なお時間ありがとうございました。」と潔く終話）</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">受付突破の巻き返し</div>
+    <div class="objection-grid">
+
+      <div class="objection-card">
+        <div class="obj-q">「営業は取り次ぎしておりません」</div>
+        <div class="obj-a">「かしこまりました。では○○様の<strong>直通番号か携帯番号</strong>を教えていただくことは可能でしょうか？」（それも断られたら）「ではいつ頃お席にいらっしゃいますか？改めてお電話させていただきます。」</div>
+      </div>
+
+      <div class="objection-card">
+        <div class="obj-q">「今席を外しています」（繰り返される）</div>
+        <div class="obj-a">「そうなんですね。何時頃お戻りになりますか？（確認）では○時にまたお電話させていただきます。<strong>○○と伝えていただけますか？</strong>」（戻り時間・移動先・直通番号を必ず聞き出す）</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ==================== TAB 6: たとえ話例 ==================== -->
+<div id="tab-tatoe" class="tab-content">
+<div class="main">
+
+  <div class="pattern-badge" style="background:var(--purple-light);color:var(--purple);border:1px solid #c4b5fd;">💬 たとえ話例 ／ 伝わらない説明はたとえ話で突破せよ</div>
+  <div class="info-box">お客様の頭の中の「投資＝ギャンブル」「不動産＝難しい」というイメージを崩すためにたとえ話が有効。<strong>例え話を入れ、分かりやすく・共感しやすい話に加工すべし！</strong></div>
+
+  <div class="section">
+    <div class="section-label">「なぜ不動産を使うのか」を説明するたとえ</div>
+    <div class="tatoe-grid">
+
+      <div class="tatoe-card">
+        <div><span class="tatoe-scene">✈️ ハワイの飛行機</span></div>
+        <div class="tatoe-body">「ハワイに行くのに、飛行機が好きだから乗るわけじゃないですよね。一番効率がいいから乗るんです。不動産も同じで、不動産が好きだからではなく、<strong>節税・保険・資産を作るために一番効率がいいから使う</strong>んです。」</div>
+        <div class="tatoe-point">👉 「不動産は興味ない」という反応に使う</div>
+      </div>
+
+      <div class="tatoe-card">
+        <div><span class="tatoe-scene orange">🏪 サイゼリヤ・マクドナルド</span></div>
+        <div class="tatoe-body">「サイゼリヤやマクドナルドって、誰が作っても同じ味ですよね。それってマニュアルがあるから。弊社の仕組みも同じで、<strong>マニュアル通りにやれば誰でも同じ結果が出る</strong>仕組みになっているんです。」</div>
+        <div class="tatoe-point">👉 仕組みの再現性・安心感を伝える時に使う</div>
+      </div>
+
+      <div class="tatoe-card">
+        <div><span class="tatoe-scene teal">💊 薬局と薬</span></div>
+        <div class="tatoe-body">「薬って飲むのが目的じゃなくて、体を治すのが目的ですよね。不動産も同じで、<strong>不動産を持つのが目的ではなく、老後のお金の不安をなくすことが目的</strong>なんです。手段と目的を混同しないことが大事で。」</div>
+        <div class="tatoe-point">👉 目的と手段を整理したい時に使う</div>
+      </div>
+
+      <div class="tatoe-card">
+        <div><span class="tatoe-scene purple">🚗 車の保険</span></div>
+        <div class="tatoe-body">「車の保険って、事故が起きないことを祈りながらでも入りますよね。使わなくても入るのは、<strong>万が一のリスクへの備え</strong>だから。不動産も同じで、使うかどうかじゃなくて、持っているかどうかが大事なんです。」</div>
+        <div class="tatoe-point">👉 保険・リスク対策として説明する時に使う</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">「税金・お金」を説明するたとえ</div>
+    <div class="tatoe-grid">
+
+      <div class="tatoe-card">
+        <div><span class="tatoe-scene green">🧾 源泉徴収票</span></div>
+        <div class="tatoe-body">「年収600万の方の源泉徴収票を見ると、年間90〜120万円が税金で引かれているんですね。<strong>月7〜10万円、何もせずに消えている</strong>計算です。気づいてなかっただけで、対策すれば取り戻せる可能性があるんです。」</div>
+        <div class="tatoe-point">👉 「節税なんて関係ない」という反応に具体的な数字で刺す</div>
+      </div>
+
+      <div class="tatoe-card">
+        <div><span class="tatoe-scene pink">🪣 穴の開いたバケツ</span></div>
+        <div class="tatoe-body">「老後のお金を一生懸命貯めているのに、年金が目減りして、物価は上がって、税金も上がって……これって<strong>穴の開いたバケツに水を入れているようなもの</strong>なんです。貯めるだけじゃなく、穴を塞ぐことも必要なんですよね。」</div>
+        <div class="tatoe-point">👉 「貯金しているから大丈夫」という反応に使う</div>
+      </div>
+
+      <div class="tatoe-card">
+        <div><span class="tatoe-scene">🌱 木を植えるベストタイミング</span></div>
+        <div class="tatoe-body">「『木を植えるベストタイミングは20年前だった。次のベストタイミングは今日だ』という言葉があります。<strong>資産形成も始めるのが早ければ早いほど有利</strong>で、今が一番若い日なんです。」</div>
+        <div class="tatoe-point">👉 「まだ早い」「考えていない」という反応に使う</div>
+      </div>
+
+      <div class="tatoe-card">
+        <div><span class="tatoe-scene orange">⏰ 老後の時間割</span></div>
+        <div class="tatoe-body">「定年後の20〜30年間、毎月20万円必要だとすると、<strong>最低でも5,000万〜7,000万円</strong>必要な計算になりますよね。年金だけでは月10万円前後しかもらえない時代に、残りをどう用意するかを今から考えておく必要があるんです。」</div>
+        <div class="tatoe-point">👉 年金・老後資金の必要性を実感させる時に使う</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">「今すぐ動く理由」を作るたとえ</div>
+    <div class="tatoe-grid">
+
+      <div class="tatoe-card">
+        <div><span class="tatoe-scene teal">🏥 健康診断</span></div>
+        <div class="tatoe-body">「健康診断って、病気になってから行くんじゃなくて、<strong>病気になる前に行きますよね</strong>。資産形成も同じで、お金に困ってから始めるんじゃなく、余裕があるうちに始めることが大事なんです。」</div>
+        <div class="tatoe-point">👉 「今は余裕があるから必要ない」という反応に使う</div>
+      </div>
+
+      <div class="tatoe-card">
+        <div><span class="tatoe-scene purple">🎯 サラリーマンの節税限界</span></div>
+        <div class="tatoe-body">「サラリーマンができる節税って、NISAやiDeCoをフルで使っても年間数十万円が限界なんですね。でも不動産を使うと、<strong>合法的に数百万円単位で節税できる</strong>ケースがある。これが富裕層が不動産を持つ理由なんです。」</div>
+        <div class="tatoe-point">👉 「NISAやってるから十分」という反応に使う</div>
+      </div>
+
+      <div class="tatoe-card">
+        <div><span class="tatoe-scene green">🏠 持ち家と賃貸</span></div>
+        <div class="tatoe-body">「持ち家の方って、住宅ローンを払いながら資産を作ってますよね。投資用マンションも同じで、<strong>家賃収入でローンを返済しながら資産を作っていく</strong>仕組みなんです。自分が住む家を持つのと本質は同じなんですよ。」</div>
+        <div class="tatoe-point">👉 「ローンを組むのが怖い」という反応に使う</div>
+      </div>
+
+      <div class="tatoe-card">
+        <div><span class="tatoe-scene pink">🚀 50:50の提案</span></div>
+        <div class="tatoe-body">「今日は押し売りでも勧誘でもなくて、<strong>50:50でフラットに話を聞いてもらうだけ</strong>です。合わなければその場で断っていただいて構いません。良ければ次のステップ、それだけのお話です。」</div>
+        <div class="tatoe-point">👉 警戒心が強い相手・最初の一歩を踏み出させる時に使う</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+
 <div class="page-footer">GRDM 経営戦略本部 ／ 社内限定資料 ／ 無断転載禁止</div>
 
 <script>
@@ -791,10 +1237,12 @@ function toggle(header) {
 
 function switchTab(tabId, btn) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.classList.remove('active-teal'); });
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('active','active-teal','active-orange','active-pink','active-purple');
+  });
   document.getElementById('tab-' + tabId).classList.add('active');
-  if (tabId === 'hoken') { btn.classList.add('active-teal'); }
-  else { btn.classList.add('active'); }
+  const classMap = { setuzei:'active', hoken:'active-teal', guide:'active', tsuikyaku:'active-orange', makikaeashi:'active-pink', tatoe:'active-purple' };
+  btn.classList.add(classMap[tabId] || 'active');
 }
 
 function expandAll() {
@@ -815,7 +1263,7 @@ function downloadPage() {
   const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'GRDM_テレアポスクリプトマニュアル_v2.html';
+  a.download = 'GRDM_テレアポスクリプトマニュアル_v3.html';
   a.click();
 }
 </script>
